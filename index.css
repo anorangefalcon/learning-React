@@ -1,0 +1,116 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.container {
+  width: 1170px;
+  padding-inline: 20px;
+  margin: 0 auto;
+}
+
+ul {
+  list-style: none;
+}
+
+.pointer {
+  cursor: pointer;
+}
+
+body {
+  font-family: sans-serif;
+}
+
+header {
+  height: 70px;
+  display: flex;
+  align-items: center;
+  background-color: rgb(21, 80, 119);
+  color: white;
+  overflow: hidden;
+}
+
+.logo {
+  height: 110px;
+}
+
+.search-bar {
+  padding: 5px 10px;
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-radius: 4px;
+  outline: none;
+  color: white;
+
+  &::placeholder {
+    color: rgba(255, 255, 255, 0.5);
+  }
+}
+
+nav {
+  display: flex;
+  justify-content: space-between;
+  font-size: 18px;
+
+  .navigation {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+
+    li {
+      cursor: pointer;
+    }
+  }
+}
+
+.card {
+  width: 175px;
+  max-height: 280px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+
+  & .card-header {
+    width: 100%;
+    height: 200px;
+    position: relative;
+  }
+
+  & img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  & .hover-image {
+    position: absolute;
+    inset-inline-start: 0;
+    inset-block-start: 0;
+    opacity: 1;
+    transition: 0.3s ease-in-out;
+
+    &:hover {
+      opacity: 0;
+    }
+  }
+
+  & .name {
+    font-size: 16px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  & p {
+    text-align: center;
+  }
+}
+
+.product-list {
+  margin-block: 30px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 10px;
+  justify-content: center;
+}
