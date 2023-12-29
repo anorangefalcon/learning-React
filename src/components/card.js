@@ -1,10 +1,11 @@
 import { imageURL } from "../../constants";
+import { Link } from "react-router-dom";
 
 const CardComponent = ({ restaurant }) => {
-  const { name, avgRating, cloudinaryImageId } = restaurant.info;
+  const { name, avgRating, cloudinaryImageId, id } = restaurant.info;
 
   return (
-    <div className="card pointer">
+    <Link to={"/restraunt/" + id} className="card pointer">
       <div className="card-header">
         <img
           className="image"
@@ -14,7 +15,7 @@ const CardComponent = ({ restaurant }) => {
       </div>
       <p className="name">{name}</p>
       <p className="price">{avgRating}</p>
-    </div>
+    </Link>
   );
 };
 

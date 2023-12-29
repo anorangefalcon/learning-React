@@ -1,4 +1,5 @@
 import { logoURL } from "../../constants";
+import { Link } from "react-router-dom";
 
 const Navbar = ({ searchText, setSearchValue }) => {
   const logo = <img className="logo" src={logoURL} alt="logo" />;
@@ -26,8 +27,12 @@ const Navbar = ({ searchText, setSearchValue }) => {
       <li>
         <Search />
       </li>
-      <li>Home</li>
-      <li>About</li>
+      <li>
+        <Link to="/">Home</Link>
+      </li>
+      <li>
+        <Link to="/about">About</Link>
+      </li>
       <li>Contact</li>
     </ul>
   );

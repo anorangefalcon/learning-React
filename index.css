@@ -48,6 +48,11 @@ header {
   }
 }
 
+a {
+  color: white;
+  text-decoration: none;
+}
+
 nav {
   display: flex;
   justify-content: space-between;
@@ -113,4 +118,16 @@ nav {
   grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
   gap: 10px;
   justify-content: center;
+}
+
+.menu {
+  display: flex;
+  padding-block: 50px;
+  gap: 30px;
+
+  & img {
+    width: 180px;
+    height: 180px;
+    margin-block: 15px;
+  }
 }
