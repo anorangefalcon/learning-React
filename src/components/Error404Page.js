@@ -2,7 +2,7 @@ import { useRouteError } from "react-router-dom";
 
 const Error404Page = () => {
   const error = useRouteError();
-  console.log(error, "here are the details of the thin g ");
+  console.log(error, "here are the details of the error ");
   return (
     <div>
       <h1>

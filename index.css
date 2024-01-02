@@ -76,6 +76,7 @@ nav {
   display: flex;
   flex-direction: column;
   gap: 5px;
+  color: black;
 
   & .card-header {
     width: 100%;
@@ -129,5 +130,20 @@ nav {
     width: 180px;
     height: 180px;
     margin-block: 15px;
+  }
+}
+
+.accordian {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-block: 20px;
+
+  & .section {
+    cursor: pointer;
+    border: 1px solid rgba(0, 0, 0, 0.131);
+    padding-block: 20px;
+    border-radius: 5px;
+    box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.077);
   }
 }

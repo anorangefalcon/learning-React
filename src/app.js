@@ -1,21 +1,19 @@
-import React, { useState, useEffect } from "react";
+import React, { useContext, lazy, Suspense, useState } from "react";
 import ReactDOM from "react-dom/client";
-import Navbar from "./components/Navbar";
+import Navbar, { searchContext } from "./components/Navbar";
 import CardComponent from "./components/Card";
-import About from "./components/about";
 import Error404Page from "./components/Error404Page";
 import Footer from "./components/Footer";
 import { dataURL } from "../constants";
 import RestaurantDetail from "./components/restrauntDetail";
-import {
-  RouterProvider,
-  createBrowserRouter,
-  Outlet,
-  BrowserRouter as Router,
-  Routes,
-  Route,
-  BrowserRouter,
-} from "react-router-dom";
+import Profile from "./components/Profile";
+import { RouterProvider, createBrowserRouter, Outlet } from "react-router-dom";
+import useFetchData from "./utils/hooks/useFetchData";
+import Accordian from "./components/Accordian";
+import searchContext from "./utils/searchContext";
+
+// lazy loading/ dynamic bundling etc.
+const About = lazy(() => import("./components/about"));
 
 async function fetchData(setRestaurants) {
   const data = await fetch(dataURL);
@@ -33,17 +31,13 @@ async function fetchData(setRestaurants) {
   setRestaurants(restaurants);
 }
 
-const ProductListComponent = ({ filterByName, Restaurants }) => {
-  const search = filterByName.toLowerCase();
-
+const ProductListComponent = ({ Restaurants }) => {
   return (
     <div className="product-list container">
       {Restaurants.map((restaurantGroup) =>
         restaurantGroup
           .filter((restaurant) => {
-            if (restaurant.info.name.toLowerCase().includes(search)) {
-              return restaurant;
-            }
+            return restaurant;
           })
           .map((restaurant) => {
             return (
@@ -58,25 +52,33 @@ const ProductListComponent = ({ filterByName, Restaurants }) => {
 };
 
 const MainComponent = () => {
-  const [searchText, setSearchValue] = useState("");
-  const [Restaurants, setRestaurants] = useState([]);
+  const Restaurants = useFetchData(); // a custom hook!
 
-  useEffect(() => {
-    fetchData(setRestaurants);
-  }, []);
-
-  return (
-    <ProductListComponent filterByName={searchText} Restaurants={Restaurants} />
+  return Restaurants.length > 0 ? (
+    <>
+      <ProductListComponent Restaurants={Restaurants} />
+    </>
+  ) : (
+    <h1 className="container">Loading Bro...</h1>
   );
 };
 
 const Layout = () => {
+  const [searchState, setSearchState] = useState("");
+  // const search = useContext(searchContext);
+
   return (
     <>
-      {/* <Navbar searchText={searchText} setSearchValue={setSearchValue} /> */}
-      <Navbar />
-      <Outlet />
-      <Footer />
+      <searchContext.Provider
+        value={{
+          search: searchState,
+          setSearch: setSearchState,
+        }}
+      >
+        <Navbar />
+        <Outlet />
+        <Footer />
+      </searchContext.Provider>
     </>
   );
 };
@@ -93,7 +95,23 @@ const appRouter = createBrowserRouter([
       },
       {
         path: "/about",
-        element: <About />,
+        element: (
+          <Suspense // suspense basically waits for the import at lazy to resolve the promise, till it is resolved it loads whatever is present in fallback
+            fallback={<h1 className="container">Hehe Still loading</h1>}
+          >
+            <About />
+          </Suspense>
+        ),
+        children: [
+          {
+            path: "profile", // you also need outlet in parent for actually make this work!
+            element: <Profile />,
+          },
+        ],
+      },
+      {
+        path: "/accordian",
+        element: <Accordian />,
       },
       {
         path: "restraunt/:id",
@@ -106,3 +124,13 @@ const appRouter = createBrowserRouter([
 root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(<RouterProvider router={appRouter} />);
 // root.render(<MainComponent />);
+
+/**
+ * PROPS DRILLING:
+ *
+ * - mainComponent contains a prop (state=a)
+ *    - child1 is passed a
+ *      - child2 is passed a
+ *
+ *    and so on...
+ */

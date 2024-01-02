@@ -1,8 +1,12 @@
 import { logoURL } from "../../constants";
 import { Link } from "react-router-dom";
+import { useContext } from "react";
+import searchContext from "../utils/searchContext";
 
-const Navbar = ({ searchText, setSearchValue }) => {
+const Navbar = () => {
   const logo = <img className="logo" src={logoURL} alt="logo" />;
+
+  const { search, setSearch } = useContext(searchContext);
 
   const Search = () => {
     return (
@@ -12,9 +16,9 @@ const Navbar = ({ searchText, setSearchValue }) => {
           name="search"
           className="search-bar"
           placeholder="Search..."
-          value={searchText}
+          value={search}
           onChange={(event) => {
-            setSearchValue(event.target.value);
+            setSearch(event.target.value);
           }}
           autoFocus={true}
         />
@@ -33,7 +37,9 @@ const Navbar = ({ searchText, setSearchValue }) => {
       <li>
         <Link to="/about">About</Link>
       </li>
-      <li>Contact</li>
+      <li>
+        <Link to="/accordian">Accordian</Link>
+      </li>
     </ul>
   );
 
