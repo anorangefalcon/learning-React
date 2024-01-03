@@ -2,9 +2,11 @@ import { logoURL } from "../../constants";
 import { Link } from "react-router-dom";
 import { useContext } from "react";
 import searchContext from "../utils/searchContext";
+import { useSelector } from "react-redux";
 
 const Navbar = () => {
   const logo = <img className="logo" src={logoURL} alt="logo" />;
+  const cartItems = useSelector((store) => store.cart.items);
 
   const { search, setSearch } = useContext(searchContext);
 
@@ -39,6 +41,9 @@ const Navbar = () => {
       </li>
       <li>
         <Link to="/accordian">Accordian</Link>
+      </li>
+      <li>
+        <Link to="/cart">Cart: {cartItems.length}</Link>
       </li>
     </ul>
   );

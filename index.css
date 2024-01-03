@@ -147,3 +147,43 @@ nav {
     box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.077);
   }
 }
+
+.cart {
+  padding-block: 40px;
+  padding-inline: 40px;
+}
+
+.removeItem {
+  & button {
+    border-radius: 50%;
+    border: 1px solid rgb(21, 80, 119);
+    color: rgb(21, 80, 119);
+    background-color: transparent;
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    transition: 0.2s ease-in-out;
+
+    &:hover {
+      color: white;
+      background-color: rgb(21, 80, 119);
+    }
+  }
+}
+
+.our-btn {
+  padding-inline: 7px;
+  padding-block: 2px;
+  background-color: transparent;
+  border: 1px solid rgb(21, 80, 119);
+  color: rgb(21, 80, 119);
+  border-radius: 5px;
+  font-size: 10px;
+  cursor: pointer;
+  transition: 0.2s ease-in-out;
+
+  &:hover {
+    color: white;
+    background-color: rgb(21, 80, 119);
+  }
+}

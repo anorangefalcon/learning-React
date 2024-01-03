@@ -1,4 +1,4 @@
-import React, { useContext, lazy, Suspense, useState } from "react";
+import React, { lazy, Suspense, useState } from "react";
 import ReactDOM from "react-dom/client";
 import Navbar, { searchContext } from "./components/Navbar";
 import CardComponent from "./components/Card";
@@ -11,6 +11,9 @@ import { RouterProvider, createBrowserRouter, Outlet } from "react-router-dom";
 import useFetchData from "./utils/hooks/useFetchData";
 import Accordian from "./components/Accordian";
 import searchContext from "./utils/searchContext";
+import { Provider } from "react-redux";
+import store from "./utils/store";
+import CartComponent from "./components/Cart";
 
 // lazy loading/ dynamic bundling etc.
 const About = lazy(() => import("./components/about"));
@@ -69,16 +72,18 @@ const Layout = () => {
 
   return (
     <>
-      <searchContext.Provider
-        value={{
-          search: searchState,
-          setSearch: setSearchState,
-        }}
-      >
-        <Navbar />
-        <Outlet />
-        <Footer />
-      </searchContext.Provider>
+      <Provider store={store}>
+        <searchContext.Provider
+          value={{
+            search: searchState,
+            setSearch: setSearchState,
+          }}
+        >
+          <Navbar />
+          <Outlet />
+          <Footer />
+        </searchContext.Provider>
+      </Provider>
     </>
   );
 };
@@ -112,6 +117,10 @@ const appRouter = createBrowserRouter([
       {
         path: "/accordian",
         element: <Accordian />,
+      },
+      {
+        path: "/cart",
+        element: <CartComponent />,
       },
       {
         path: "restraunt/:id",

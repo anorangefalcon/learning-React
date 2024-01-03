@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import { imageURL, restaurantDataURL } from "../../constants";
 import { useParams } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { addItem } from "../utils/slices/cartSlice";
 
 const RestaurantDetailComponent = () => {
   const { id } = useParams();
@@ -30,6 +32,11 @@ const RestaurantDetailComponent = () => {
     FetchMenu();
   }, []);
 
+  const dispatch = useDispatch();
+  const addToCart = (item) => {
+    dispatch(addItem(item));
+  };
+
   if (menu) {
     return (
       <div className="menu container">
@@ -43,7 +50,14 @@ const RestaurantDetailComponent = () => {
         </div>
         <div className="right">
           {menu.items
-            ? menu.items.map((item) => <li key={item}>{item}</li>)
+            ? menu.items.map((item) => (
+                <li key={item}>
+                  {item}{" "}
+                  <button className="our-btn" onClick={() => addToCart(item)}>
+                    Add
+                  </button>
+                </li>
+              ))
             : null}
         </div>
       </div>
